@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Arsenal — Domine o Ecossistema Claude Completamente</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#0a0a08;--bg2:#111110;--bg3:#181816;--card:#141412;--card2:#1c1c1a;
+  --border:rgba(255,200,80,0.08);--border2:rgba(255,200,80,0.16);
+  --text:#e8e6e0;--text2:#9a9890;--text3:#5a5a52;
+  --orange:#f97316;--orange2:#fb923c;--orange3:#fed7aa;
+  --green:#4ade80;--red:#f87171;--cyan:#22d3ee;--yellow:#fbbf24;
+  --r:10px;--r2:6px;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+::selection{background:rgba(249,115,22,.3)}
+
+/* Background grid texture */
+.grid-bg{position:fixed;inset:0;z-index:0;opacity:.4;
+  background-image:linear-gradient(rgba(249,115,22,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(249,115,22,.03) 1px,transparent 1px);
+  background-size:48px 48px;pointer-events:none}
+.glow{position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:600px;
+  background:radial-gradient(ellipse at center,rgba(249,115,22,.12) 0%,transparent 70%);z-index:0;pointer-events:none}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,10,8,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1100px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:700;font-size:14px}
+.logo-icon{width:26px;height:26px;background:var(--orange);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#000}
+.nav-cta{background:var(--orange);color:#000;padding:9px 18px;border-radius:7px;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.3px;transition:transform .15s, box-shadow .15s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(249,115,22,.3)}
+
+/* HERO */
+.hero{position:relative;z-index:1;padding:72px 24px 56px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border2);
+  padding:7px 14px;border-radius:20px;font-family:var(--mono);font-size:11px;color:var(--orange2);margin-bottom:28px}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1.hero-title{font-family:var(--sans);font-size:clamp(32px,6vw,56px);font-weight:800;letter-spacing:-.02em;line-height:1.08;max-width:800px;margin:0 auto 20px}
+h1.hero-title .hl{color:var(--orange);position:relative}
+.hero-sub{font-size:17px;color:var(--text2);max-width:560px;margin:0 auto 36px;font-weight:400}
+.hero-sub strong{color:var(--text)}
+
+/* Terminal hero signature element */
+.terminal{max-width:680px;margin:0 auto 40px;background:var(--card);border:1px solid var(--border2);border-radius:12px;
+  overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.6),0 0 0 1px rgba(249,115,22,.05);text-align:left}
+.term-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;background:var(--bg3);border-bottom:1px solid var(--border)}
+.term-dot{width:11px;height:11px;border-radius:50%}
+.term-dot.r{background:#ff5f57}.term-dot.y{background:#febc2e}.term-dot.g{background:#28c840}
+.term-title{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--text3)}
+.term-body{padding:22px 20px;font-family:var(--mono);font-size:13px;line-height:1.85;min-height:260px}
+.term-line{opacity:0;animation:fadeIn .3s forwards}
+.prompt{color:var(--green)}
+.cmd{color:var(--text)}
+.out{color:var(--text2)}
+.out-hl{color:var(--orange2)}
+.cursor{display:inline-block;width:7px;height:14px;background:var(--orange);animation:blink 1s infinite;vertical-align:middle;margin-left:2px}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+@keyframes fadeIn{to{opacity:1}}
+
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+.btn-primary{background:var(--orange);color:#000;padding:16px 32px;border-radius:9px;font-family:var(--mono);
+  font-weight:700;font-size:14px;letter-spacing:.3px;display:inline-flex;align-items:center;gap:9px;
+  transition:transform .15s, box-shadow .15s;box-shadow:0 8px 24px rgba(249,115,22,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(249,115,22,.4)}
+.hero-note{font-size:12px;color:var(--text3);font-family:var(--mono)}
+
+/* STATS STRIP */
+.stats-strip{position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:var(--bg2);padding:28px 24px}
+.stats-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.stat-n{font-family:var(--mono);font-size:28px;font-weight:800;color:var(--orange)}
+.stat-l{font-size:11px;color:var(--text3);font-family:var(--mono);margin-top:4px;letter-spacing:.3px}
+
+/* SECTION generic */
+section{position:relative;z-index:1;padding:80px 24px}
+.section-eyebrow{font-family:var(--mono);font-size:12px;color:var(--orange2);letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-eyebrow::before{content:'//';color:var(--text3)}
+h2.section-title{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.01em;margin-bottom:14px;max-width:640px}
+.section-sub{color:var(--text2);font-size:15.5px;max-width:560px;margin-bottom:48px}
+
+/* PROBLEM section */
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.problem-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px}
+.problem-card .pc-icon{font-size:20px;margin-bottom:12px;opacity:.7}
+.problem-card p{font-size:13.5px;color:var(--text2);line-height:1.65}
+.problem-card strong{color:var(--text)}
+
+/* MODULES grid */
+.mod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px;
+  transition:border-color .2s, transform .2s}
+.mod-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.mod-num{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:8px}
+.mod-name{font-size:13px;font-weight:600;color:var(--text)}
+
+/* SKILLS preview */
+.skills-preview{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:32px;position:relative;overflow:hidden}
+.skills-cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:24px}
+.skill-cat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:14px;text-align:center}
+.skill-cat-n{font-family:var(--mono);font-weight:800;font-size:22px;color:var(--orange)}
+.skill-cat-l{font-size:11px;color:var(--text2);margin-top:3px;text-transform:capitalize}
+
+/* FEATURE LIST */
+.feature-row{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.feature-row:last-child{border-bottom:none}
+.feature-check{min-width:22px;height:22px;border-radius:50%;background:rgba(74,222,128,.12);
+  display:flex;align-items:center;justify-content:center;color:var(--green);font-size:11px;font-weight:700;margin-top:1px}
+.feature-text strong{display:block;font-size:14.5px;color:var(--text);margin-bottom:3px}
+.feature-text span{font-size:13px;color:var(--text2)}
+
+/* PRICING */
+.pricing-card{max-width:460px;margin:0 auto;background:linear-gradient(180deg,var(--card) 0%,var(--bg2) 100%);
+  border:1px solid var(--border2);border-radius:16px;padding:40px 36px;position:relative;
+  box-shadow:0 40px 100px -30px rgba(249,115,22,.15)}
+.pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:.5}
+.price-label{font-family:var(--mono);font-size:12px;color:var(--orange2);text-align:center;margin-bottom:16px}
+.price-value{text-align:center;margin-bottom:6px}
+.price-old{font-size:16px;color:var(--text3);text-decoration:line-through;margin-bottom:4px}
+.price-new{font-size:52px;font-weight:800;font-family:var(--sans)}
+.price-new sup{font-size:22px;vertical-align:top;top:8px;position:relative}
+.price-installments{text-align:center;font-size:12.5px;color:var(--text2);margin-bottom:28px}
+.pricing-features{margin-bottom:28px}
+.pf-item{display:flex;align-items:center;gap:10px;padding:9px 0;font-size:13.5px;color:var(--text2)}
+.pf-item .check{color:var(--green);font-weight:700}
+.btn-checkout{display:block;width:100%;background:var(--orange);color:#000;padding:18px;border-radius:10px;
+  text-align:center;font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.3px;
+  box-shadow:0 10px 30px rgba(249,115,22,.3);transition:transform .15s, box-shadow .15s}
+.btn-checkout:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(249,115,22,.45)}
+.guarantee{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:18px;font-size:11.5px;color:var(--text3)}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+.faq-q{font-size:14.5px;font-weight:600;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q::after{content:'+';font-family:var(--mono);font-size:18px;color:var(--orange);transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{font-size:13.5px;color:var(--text2);margin-top:12px;line-height:1.65;max-height:0;overflow:hidden;transition:max-height .25s}
+.faq-item.open .faq-a{max-height:200px}
+
+/* FINAL CTA */
+.final-cta{text-align:center;background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:56px 32px;position:relative;overflow:hidden}
+.final-cta::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:600px;height:400px;
+  background:radial-gradient(ellipse at center,rgba(249,115,22,.1) 0%,transparent 70%)}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:32px 24px;text-align:center}
+footer p{font-size:11.5px;color:var(--text3);font-family:var(--mono)}
+
+@media(max-width:768px){
+  .problem-grid{grid-template-columns:1fr}
+  .mod-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:20px}
+  .pricing-card{padding:32px 24px}
+  .price-new{font-size:42px}
+  section{padding:56px 20px}
+  .hero{padding:48px 20px 40px}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow"></div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo"><div class="logo-icon">⚡</div> CLAUDE ARSENAL</div>
+    <a href="#pricing" class="nav-cta">$ comprar agora</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow"><span class="dot"></span> 506 skills · 20 módulos · acesso vitalício</div>
+  <h1 class="hero-title">Pare de improvisar com o Claude.<br>Comece a <span class="hl">dominá-lo</span>.</h1>
+  <p class="hero-sub">O curso mais completo em português sobre o ecossistema Claude — do primeiro prompt até agentes autônomos rodando sozinhos. <strong>Construído por quem usa isso todos os dias.</strong></p>
+
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
+      <div class="term-title">claude-arsenal — zsh</div>
+    </div>
+    <div class="term-body" id="termBody"></div>
+  </div>
+
+  <div class="hero-ctas">
+    <a href="#pricing" class="btn-primary">⚡ Quero dominar o Claude</a>
+  </div>
+  <p class="hero-note">Acesso imediato após a compra · suporte direto</p>
+</section>
+
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div><div class="stat-n">20</div><div class="stat-l">módulos completos</div></div>
+    <div><div class="stat-n">506</div><div class="stat-l">skills profissionais</div></div>
+    <div><div class="stat-n">11</div><div class="stat-l">áreas de atuação</div></div>
+    <div><div class="stat-n">∞</div><div class="stat-l">acesso vitalício</div></div>
+  </div>
+</div>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="section-eyebrow">o problema</div>
+    <h2 class="section-title">Você usa o Claude todo dia. Mas usa <em>bem</em>?</h2>
+    <p class="section-sub">A maioria das pessoas usa 10% do que o Claude é capaz de fazer — e nem sabe disso.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="pc-icon">💬</div>
+        <p><strong>Você reescreve o mesmo contexto</strong> em toda conversa nova, porque não sabe que Skills existem para isso.</p>
+      </div>
+      <div class="problem-card">
+        <div class="pc-icon">🔁</div>
+        <p><strong>Você copia e cola manualmente</strong> entre o Claude e suas ferramentas, sem saber que isso pode ser 100% automatizado.</p>
+      </div>
+      <div class="problem-card">
+        <div class="pc-icon">🧩</div>
+        <p><strong>Você nunca ouviu falar de MCP, Computer Use ou Extended Thinking</strong> — e está perdendo o que há de mais avançado na IA hoje.</p>
+      </div>
+      <div class="problem-card">
+        <div class="pc-icon">📉</div>
+        <p><strong>Você trata o Claude como um chat</strong>, quando ele pode ser um sistema completo de produtividade e automação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="modules">
+  <div class="wrap">
+    <div class="section-eyebrow">o que você aprende</div>
+    <h2 class="section-title">20 módulos. Do básico ao avançado. Sem enrolação.</h2>
+    <p class="section-sub">Conteúdo didático de verdade — com analogias, exemplos reais e passo a passo. Não é documentação técnica reciclada.</p>
+
+    <div class="mod-grid">
+      <div class="mod-card"><div class="mod-num">MÓDULO 01</div><div class="mod-name">Skills do Claude</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 02</div><div class="mod-name">Automação com n8n</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 03</div><div class="mod-name">Obsidian + Claude</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 04</div><div class="mod-name">Composio & Agentes</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 05</div><div class="mod-name">Claude Code & API</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 06</div><div class="mod-name">MCP Protocol</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 07</div><div class="mod-name">Claude Projects</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 08</div><div class="mod-name">Computer Use</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 09</div><div class="mod-name">Extended Thinking</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 10</div><div class="mod-name">Prompt Engineering</div></div>
+      <div class="mod-card"><div class="mod-num">MÓDULO 11</div><div class="mod-name">Multi-agent Systems</div></div>
+      <div class="mod-card"><div class="mod-num">+ 9 módulos</div><div class="mod-name">avançados inclusos</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-eyebrow">o arsenal</div>
+    <h2 class="section-title">506 Skills prontas. Copie, cole, use.</h2>
+    <p class="section-sub">Cada skill é testada e pronta para usar no seu negócio, hoje mesmo — sem precisar escrever nada do zero.</p>
+
+    <div class="skills-preview">
+      <div class="skills-cat-grid">
+        <div class="skill-cat"><div class="skill-cat-n">77</div><div class="skill-cat-l">dev</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">59</div><div class="skill-cat-l">marketing</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">58</div><div class="skill-cat-l">vendas</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">45</div><div class="skill-cat-l">produtividade</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">44</div><div class="skill-cat-l">rh</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">44</div><div class="skill-cat-l">financeiro</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">42</div><div class="skill-cat-l">jurídico</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">42</div><div class="skill-cat-l">criativo</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">37</div><div class="skill-cat-l">e-commerce</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">29</div><div class="skill-cat-l">educação</div></div>
+        <div class="skill-cat"><div class="skill-cat-n">29</div><div class="skill-cat-l">saúde</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-eyebrow">tudo incluso</div>
+    <h2 class="section-title">O que vem junto do curso</h2>
+
+    <div style="max-width:680px">
+      <div class="feature-row">
+        <div class="feature-check">✓</div>
+        <div class="feature-text"><strong>Q&A com IA em cada módulo</strong><span>Tire dúvidas em tempo real direto na plataforma, sem precisar sair do curso.</span></div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-check">✓</div>
+        <div class="feature-text"><strong>Sistema de progressão por Mastery Points</strong><span>Avance no seu ritmo — ganhe pontos lendo o conteúdo e respondendo perguntas.</span></div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-check">✓</div>
+        <div class="feature-text"><strong>Download de todas as 506 skills</strong><span>Baixe individualmente ou tudo de uma vez, em arquivo organizado por categoria.</span></div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-check">✓</div>
+        <div class="feature-text"><strong>Atualizações incluídas para sempre</strong><span>Novos módulos e skills são adicionados periodicamente, sem custo extra.</span></div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-check">✓</div>
+        <div class="feature-text"><strong>Acesso vitalício, sem mensalidade</strong><span>Pague uma vez, use para sempre — em qualquer dispositivo.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:40px">
+      <div class="section-eyebrow" style="justify-content:center">investimento</div>
+      <h2 class="section-title" style="margin:0 auto">Um preço. Acesso para sempre.</h2>
+    </div>
+
+    <div class="pricing-card">
+      <div class="price-label">$ claude-arsenal --acesso-completo</div>
+      <div class="price-value">
+        <div class="price-new"><sup>R$</sup>97</div>
+      </div>
+      <div class="price-installments">ou 12x de R$9,70 no cartão</div>
+
+      <div class="pricing-features">
+        <div class="pf-item"><span class="check">✓</span> 20 módulos completos e didáticos</div>
+        <div class="pf-item"><span class="check">✓</span> 506 skills profissionais para download</div>
+        <div class="pf-item"><span class="check">✓</span> Q&A com IA em cada módulo</div>
+        <div class="pf-item"><span class="check">✓</span> Acesso vitalício, sem mensalidade</div>
+        <div class="pf-item"><span class="check">✓</span> Atualizações futuras inclusas</div>
+        <div class="pf-item"><span class="check">✓</span> Suporte direto por email</div>
+      </div>
+
+      <a href="https://pay.kiwify.com.br/YZ0vls0" class="btn-checkout">⚡ Quero acesso agora</a>
+      <div class="guarantee">🔒 Pagamento seguro via Kiwify</div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="max-width:680px">
+    <div class="section-eyebrow">perguntas frequentes</div>
+    <h2 class="section-title">Antes de você decidir</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Preciso saber programar para fazer o curso?</div>
+        <div class="faq-a">Não. O curso foi feito para qualquer pessoa que usa o Claude — de empreendedores a profissionais de qualquer área. Tudo é explicado do zero, com exemplos práticos do dia a dia.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">As 506 skills funcionam em qualquer plano do Claude?</div>
+        <div class="faq-a">Sim. As skills funcionam no Claude.ai (Free, Pro ou Team), na API, no Claude Code e em outras ferramentas compatíveis. Você escolhe onde usar.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">O acesso expira em algum momento?</div>
+        <div class="faq-a">Não. É pagamento único e acesso vitalício — incluindo todas as atualizações futuras de conteúdo e skills.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Se eu tiver dúvidas, tem suporte?</div>
+        <div class="faq-a">Sim. Você tem acesso direto ao email de suporte para tirar dúvidas técnicas ou sobre o conteúdo do curso.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como recebo o acesso depois de comprar?</div>
+        <div class="faq-a">Imediatamente após a confirmação do pagamento, você recebe um email com seu código de acesso exclusivo e o link da plataforma.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="final-cta">
+  <div class="wrap">
+    <div class="final-cta">
+      <div class="section-eyebrow" style="justify-content:center">última chamada</div>
+      <h2 class="section-title" style="margin:0 auto 24px;max-width:520px">Você pode continuar improvisando. Ou pode dominar de verdade.</h2>
+      <a href="https://pay.kiwify.com.br/YZ0vls0" class="btn-primary" style="position:relative;z-index:1">⚡ Garantir meu acesso por R$97</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>claude-arsenal © 2026 · suporte: zeroaoluxo01@gmail.com · este produto não possui afiliação com a Anthropic</p>
+</footer>
+
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>{
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen)item.classList.add('open');
+  });
+});
+
+// Animated terminal hero
+const termLines=[
+  {p:'$ ',c:'claude --skill-pack load',type:'cmd'},
+  {c:'⚡ Loading Claude Arsenal...',type:'out-hl'},
+  {c:'✓ 20 módulos carregados',type:'out'},
+  {c:'✓ 506 skills indexadas',type:'out'},
+  {c:'✓ Q&A engine online',type:'out'},
+  {c:'',type:'out'},
+  {p:'$ ',c:'claude --ask "como automatizar meu atendimento?"',type:'cmd'},
+  {c:'→ usando skill: customer-service-automation.md',type:'out-hl'},
+  {c:'→ conectando n8n + webhook + claude api...',type:'out'},
+  {c:'✓ fluxo pronto. tempo de resposta: 1.2s',type:'out'},
+  {c:'',type:'out'},
+  {p:'$ ',c:'_',type:'cmd',cursor:true}
+];
+
+const termBody=document.getElementById('termBody');
+let lineIdx=0;
+
+function renderTermLine(){
+  if(lineIdx>=termLines.length){
+    setTimeout(()=>{termBody.innerHTML='';lineIdx=0;renderTermLine();},2400);
+    return;
+  }
+  const l=termLines[lineIdx];
+  const div=document.createElement('div');
+  div.className='term-line';
+  let html='';
+  if(l.p)html+='<span class="prompt">'+l.p+'</span>';
+  html+='<span class="'+l.type+'">'+(l.cursor?l.c.replace('_','')+'<span class="cursor"></span>':l.c)+'</span>';
+  div.innerHTML=html;
+  termBody.appendChild(div);
+  requestAnimationFrame(()=>div.style.opacity='1');
+  lineIdx++;
+  setTimeout(renderTermLine, l.type==='cmd'?550:280);
+}
+renderTermLine();
+</script>
+
+</body>
+</html>
